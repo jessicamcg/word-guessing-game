@@ -1,0 +1,41 @@
+:root {
+    --light-color: rgb(209, 209, 209);
+    --medium-color: orange;
+    --dark-color: rgb(80, 52, 0);
+}
+
+main {
+    display: inline-block;
+}
+
+header {
+    background-color: blanchedalmond;
+    color: var(--medium-color);
+    font-size: 200%;
+}
+
+.wordBox {
+    display: block;
+}
+
+.wordBox div {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    font-size: 2rem;
+    width: 50px;
+    background: var(--medium-color);
+    color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+    padding: 5px;
+    float: left;
+    height: 50px;
+    width: 50px;
+}
+
+.timer {
+    display: inline-block;
+    background-color: blanchedalmond;
+    color: var(--medium-color);
+    font-size: 200%;
+}
