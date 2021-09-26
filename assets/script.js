@@ -6,76 +6,92 @@ var wordBank = [
     'method', 'attribute', 'github',
     'algorithm', 'scope', 'iteration'
 ];
-
-// randomly picks a word from wordBank then slpits the letters apart 
-var guessWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-console.log(guessWord);
-var letters = guessWord.split('');
-console.log(letters);
-// display word to guess test
-// document.querySelector('.wordBox').textContent = guessWord;
-
-// create a separate div for each letter in guessWord?? 
-for ( var i=0; i<guessWord.length; i++ ) {
-    var letterDiv = document.createElement('div');
-    document.querySelector('.wordBox').appendChild(letterDiv);
-    localStorage.setItem('letters', letters[i]);
-}
-
-console.log(guessWord.length);
+var winCount = 0;
+var lossCount = 0;
 
 
 // timer section
 var timeEl = document.querySelector('.timer');
-var secondsLeft = 20;
+var secondsLeft = 10;
 
 function setTime() {
-    // Sets interval in variable
-    var timerInterval = setInterval(function() {
-      secondsLeft--;
-      timeEl.textContent = secondsLeft + " seconds left to guess.";
+  // Sets interval in variable
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft + " seconds left to guess.";
+    if(secondsLeft <= 0) {
+      clearInterval(timerInterval);
+        // Calls function to display message
+      timesUpMessage();
+      document.getElementById("start-btn").disabled = false; // start game button back on
+      guessWord = localStorage.getItem('guessWord');
+      for ( var i=0; i<guessWord.length; i++ ) {
+        document.querySelector('letterDiv').textContent = letters[i];
+        console.log(letters[i]);
+        console.log(guessWord);
+      };
+    };
   
-      if(secondsLeft <= 0) {
-        clearInterval(timerInterval);
-        // Calls function to display loser message
-        loserMessage();
-      }
+  }, 1000);
   
-    }, 1000);
-  }
-
-function loserMessage() {
-    timeEl.textContent = secondsLeft + " seconds left to guess. You Lose!";
-}
-
-// calling timer functions
-setTime();
+};
 
 
-//event listeners for key strokes to guess the letters of the word
+function timesUpMessage() {
+    timeEl.textContent = secondsLeft + " seconds left to guess";
+};
 
-document.addEventListener( 'keydown', function(event) {
-  var key = event.key.toLowerCase();
-  console.log(key);
-  letterDiv =  document.querySelector('.wordBox').children;
-  console.log(letterDiv.length);
+
+function playGame() {
+  // randomly picks a word from wordBank then slpits the letters apart 
+  var guessWord = wordBank[Math.floor(Math.random() * wordBank.length)];
+  var letters = guessWord.split('');
+  document.querySelector('.wordBox').textContent = '';
+  console.log(guessWord);
+  // create a separate div for each letter in guessWord
   for ( var i=0; i<guessWord.length; i++ ) {
-    // letterDiv.textContent = "";
-    // for ( var i=0; i<guessWord.length; i++ ) {
-      if(key===guessWord[i]){
-        
-      //  .appendChild(letterDiv);
-        letterDiv[i].textContent = guessWord[i];
-        // console.log('test');
-        // console.log(letters[i])
+    var letterDiv = document.createElement('div');
+    document.querySelector('.wordBox').appendChild(letterDiv);
+    localStorage.setItem('letters', letters[i]);
+  };
 
-      }
-    // }
-  }
+  //event listener for key strokes to guess the letters of the word
+  document.addEventListener( 'keydown', function(event) {
+    var key = event.key.toLowerCase();
+    letterDiv =  document.querySelector('.wordBox').children;
+
+    for ( var i=0; i<guessWord.length; i++ ) {
+      if(key===guessWord[i]){
+        letterDiv[i].textContent = guessWord[i];
+        console.log('test');
+      };
+    };
+  });
+};
+
+// checking wins and losses 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//event listener for clicking a start game button
+document.getElementById('start-btn').addEventListener('click', function() {
+  secondsLeft =10;
+  document.getElementById("start-btn").disabled = true; // disables start button while game is in progress
+  localStorage.setItem('letters','') // clears previous word before generating a new game
+  setTime(); // calling timer functions
+  playGame();
+
 });
 
-// function to compare user input to each letter
-// for every i in guessword length i want to check if user input matches on guessword letter
-
-//if  user input == at least one of my letters i want the letter to be revealed
-// textContent
+// reset game button

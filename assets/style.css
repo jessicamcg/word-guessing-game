@@ -12,6 +12,27 @@ header {
     background-color: blanchedalmond;
     color: var(--medium-color);
     font-size: 200%;
+    text-align: center;
+}
+
+.container {
+    display: block;
+    justify-content: center;
+    padding: 0 auto;
+}
+
+button {
+    background: var(--medium-color);
+    border-radius: 8px;
+    color: var(--dark-color);
+    cursor: pointer;
+    font-size: 1rem;
+    letter-spacing: 0.21px;
+    line-height: 16px;
+    max-width: 200px;
+    padding: 10px 10px;
+    text-align: center;
+    margin-top: 0.6em;
 }
 
 .wordBox {
